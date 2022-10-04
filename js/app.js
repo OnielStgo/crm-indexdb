@@ -1,6 +1,6 @@
 (function(){
 
-  let DB
+  let DB;
 
   document.addEventListener('DOMContentLoaded', () => {
     criarDB();
@@ -8,7 +8,7 @@
 
   //criar a base de dados em indexDB
   function criarDB(){
-    const criarDB = window.indexedDB.open('crm', 1);
+    const criarDB = window.indexedDB.open('crm', 2);
 
     criarDB.onerror = function(){
       console.log('Ocorreu um erro');

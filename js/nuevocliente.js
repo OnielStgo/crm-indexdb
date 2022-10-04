@@ -10,9 +10,10 @@
     formulario.addEventListener('submit', validarCliente)
   });
 
+  //conetar à base de dados
   function conetarDB(){
 
-    const abrirConexao = window.indexedDB.open('crm', 1);
+    const abrirConexao = window.indexedDB.open('crm', 2);
 
     abrirConexao.onerror = function(){
       console.log('Ocorreu um erro')
@@ -36,8 +37,44 @@
       imprimirAlerta('Todos os campos são obrigatórios', 'error');
       return;
     }
+
+    //criar um objeto com a informação
+    const cliente = {
+      nombre,
+      email,
+      telefono,
+      empresa,
+      id: Date.now()
+    }
+
+    console.log(cliente)
+    
+    criarNovoCliente(cliente);
   }
 
+  //cadastrar novo cliente na base de dados
+  function criarNovoCliente(cliente){
+    const transaction = DB.transaction(['crm'], 'readwrite');
+    const objectStore = transaction.objectStore('crm')
+    
+    transaction.onerror = function(){
+      
+      imprimirAlerta('Ocorreu um erro', 'error')
+    };
+
+    transaction.oncomplete = function(){
+      
+      imprimirAlerta('Cliente adicionado corretamente!');
+
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 3000);
+    }
+
+    objectStore.add(cliente)
+  }
+
+  //imprimir mensages
   function imprimirAlerta(mensaje, tipo){
 
     const alerta = document.querySelector('.alerta');
