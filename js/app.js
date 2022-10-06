@@ -56,7 +56,7 @@
 
         if (cursor) {
           const { nombre, email, telefono, empresa, id } = cursor.value;
-
+    
           const listadoClientes = document.querySelector("#listado-clientes");
           listadoClientes.innerHTML += ` 
           <tr>
@@ -79,7 +79,7 @@
 
           cursor.continue();
         } else {
-          console.log("Não tem mais registros");
+          //console.log("Não tem mais registros");
         }
       };
     };
