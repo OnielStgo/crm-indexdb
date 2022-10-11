@@ -2,6 +2,7 @@
 
   let DB;
   let idCliente;
+
   const nombreInput = document.querySelector('#nombre');
   const emailInput = document.querySelector('#email');
   const telefonoInput = document.querySelector('#telefono');
@@ -11,7 +12,7 @@
   
   document.addEventListener('DOMContentLoaded', () => {
 
-    //atualizar registro
+    //atualizar cliente
     formulario.addEventListener('submit', atualizarCliente)
 
     conetarDB();
@@ -27,10 +28,11 @@
     }
   });
 
+  //atualizar cliente
   function atualizarCliente(e){
     e.preventDefault();
     if( nombreInput.value === "" || emailInput.value === "" || telefonoInput.value === "" || empresaInput.value === "") {
-      imprimirAlerta("Nenhum campo pode estar vacio", "error");
+      imprimirAlerta("Nenhum campo pode estar vazio", "error");
       return;
     };
 
@@ -61,6 +63,7 @@
     
   }
 
+  //obtener da base de dados o cliente que vamos atualizar
   function obtenerCliente(id) {
     const transaction = DB.transaction(['crm'], 'readwrite');
     const objectStore = transaction.objectStore('crm');
@@ -79,6 +82,7 @@
     }
   }
 
+  //preecher o formulario com os dados do cliente que vamos atualizar
   function preencherFormulario(datosCliente) {
     const { nombre, email, telefono, empresa } = datosCliente;
 

@@ -1,17 +1,17 @@
 (function(){
 
-  let DB;
   const formulario = document.querySelector('#formulario')
 
   document.addEventListener('DOMContentLoaded', () => {
 
     conetarDB();
 
+    //validar novo cliente
     formulario.addEventListener('submit', validarCliente)
   });
 
   
-
+  //validar novo cliente
   function validarCliente(e){
     e.preventDefault();
     
@@ -35,15 +35,16 @@
       id: Date.now()
     }
 
-    console.log(cliente)
-    
+    //inserir novo cliente na base de dados   
     criarNovoCliente(cliente);
   }
 
   //cadastrar novo cliente na base de dados
   function criarNovoCliente(cliente){
     const transaction = DB.transaction(['crm'], 'readwrite');
-    const objectStore = transaction.objectStore('crm')
+    const objectStore = transaction.objectStore('crm');
+
+    objectStore.add(cliente)
     
     transaction.onerror = function(){
       
@@ -53,13 +54,11 @@
     transaction.oncomplete = function(){
       
       imprimirAlerta('Cliente adicionado corretamente!');
-
+      
       setTimeout(() => {
         window.location.href = "index.html";
       }, 3000);
     }
-
-    objectStore.add(cliente)
   }
 
 })()
